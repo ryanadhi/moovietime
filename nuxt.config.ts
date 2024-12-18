@@ -14,12 +14,14 @@ export default defineNuxtConfig({
       tmdbApiKey: process.env.TMDB_API_KEY,
     },
   },
-  head: {
-    link: [
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap",
-      },
-    ],
+  app: {
+    head: {
+      link: [
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap",
+        },
+      ],
+    },
   },
 });

@@ -1,11 +1,7 @@
 <template>
-    <div class="container mx-auto py-10">
-        <!-- Line above the title -->
-        <div class="line bg-[#E74C3C] w-[112px] h-[6px] mb-4"></div>
-
+    <div>
         <!-- Title -->
         <h2 class="text-[24px] font-semibold text-[#E5E5E5] mb-8">Discover Movies</h2>
-
 
         <!-- Loading State -->
         <div v-if="loading" class="loading-spinner text-white">Loading...</div>
@@ -39,6 +35,8 @@ const fetchTopMovies = async () => {
             throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+
+        console.log({ data });
         topMovies.value = data.results.slice(0, 10); // Get the top 10 movies
     } catch (error) {
         console.error('Error fetching movies:', error);
@@ -71,18 +69,5 @@ onMounted(() => {
         grid-template-columns: repeat(2, 1fr);
         /* 2 columns on small screens */
     }
-}
-
-@media (max-width: 480px) {
-    .movie-list {
-        grid-template-columns: 1fr;
-        /* 1 column on extra small screens */
-    }
-}
-
-.loading-spinner {
-    text-align: center;
-    font-size: 1.5rem;
-    color: white;
 }
 </style>
