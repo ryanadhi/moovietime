@@ -19,9 +19,7 @@
 <style scoped>
 .footer {
     background-color: rgba(0, 0, 0, 0.25);
-    /* Black with 25% opacity */
     color: white;
-    margin-top: auto;
 }
 
 .footer p {
@@ -30,7 +28,6 @@
 
 .footer-logo {
     height: 24px;
-    /* Set all footer images to 24px height */
 }
 
 .footer img {

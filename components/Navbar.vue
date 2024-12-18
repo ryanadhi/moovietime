@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar px-6 py-4">
+    <nav class="navbar z-50 bg-opacity-5">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
             <NuxtLink to="/">
@@ -20,7 +20,6 @@
 
             <!-- Navigation Links -->
             <ul class="flex space-x-6">
-                <!-- Categories with Icon -->
                 <li class="flex items-center space-x-2">
                     <img src="/icons/category.png" alt="Categories Icon" class="h-5 w-5" />
                     <span class="link-style">Categories</span>
@@ -29,7 +28,7 @@
                     <NuxtLink to="/movies" class="hover:underline">Movies</NuxtLink>
                 </li>
                 <li>
-                    <NuxtLink to="/tv-shows" class="hover:underline">TV Shows</NuxtLink>
+                    <NuxtLink to="/tvshows" class="hover:underline">TV Shows</NuxtLink>
                 </li>
                 <li><span class="link-style">Login</span></li>
             </ul>
@@ -40,33 +39,26 @@
 <style scoped>
 .navbar {
     background-color: rgba(255, 255, 255, 0.05);
-    /* White with 5% opacity */
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Optional shadow */
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
 }
 
 .navbar a,
 .link-style {
     color: white;
-    /* Ensure links and plain text are styled the same */
     font-weight: 500;
-    cursor: pointer;
-    /* Add pointer cursor for plain text to simulate a link */
 }
 
 .navbar a:hover,
 .link-style:hover {
     text-decoration: underline;
-    /* Add hover effect for plain text and links */
 }
 
 .search-input {
     border: 1px solid rgba(255, 255, 255, 0.2);
-    /* Subtle border */
-    transition: border-color 0.3s ease;
-    background-color: #1E232B;
-    /* Match overall background color */
 }
 
 .search-input:focus {
@@ -75,6 +67,5 @@
 
 .search-input::placeholder {
     color: rgba(255, 255, 255, 0.5);
-    /* Placeholder color */
 }
 </style>
