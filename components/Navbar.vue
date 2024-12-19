@@ -34,7 +34,8 @@
                         <img src="/icons/category.png" alt="Categories Icon" class="h-5 w-5" />
                         <span class="link-style">Categories</span>
                     </div>
-                    <ul class="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ul
+                        class="absolute z-20 left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer uppercase text-sm">Action</li>
                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer uppercase text-sm">Adventure</li>
                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer uppercase text-sm">Animation</li>

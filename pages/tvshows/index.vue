@@ -61,19 +61,20 @@ const fetchTvShows = async () => {
     }
 };
 
-const handleSortSelection = (event) => {
-    sort.value = event.target.value;
-    tvShows.value = [];
+const handleSortSelection = (value) => {
+    sort.value = value;
+    movies.value = [];
     page.value = 1;
     loading.value = true;
-    fetchTvShows();
+    fetchMovies();
 };
 
-const handleGenreSelection = () => {
-    tvShows.value = [];
+const handleGenreSelection = (newSelectedGenres) => {
+    selectedGenres.value = newSelectedGenres;
+    movies.value = [];
     page.value = 1;
     loading.value = true;
-    fetchTvShows();
+    fetchMovies();
 };
 
 const handleLoadMore = () => {

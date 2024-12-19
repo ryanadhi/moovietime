@@ -7,13 +7,13 @@
             <h2 class="text-[36px] font-semibold text-[#E5E5E5] mb-8">Movies</h2>
         </div>
 
-        <div class="container flex relative z-50">
+        <div class="container flex relative z-20">
             <div class="basis-1/4">
                 <Sidebar :sort="sort" :selectedGenres="selectedGenres" @update:sort="handleSortSelection"
                     @update:selectedGenres="handleGenreSelection" type="movie" />
             </div>
             <div class="content basis-3/4 flex  flex-col items-center">
-                <div class="content-list grid grid-cols-4 gap-6">
+                <div class="content-list grid grid-cols-4 gap-6 ">
                     <MovieCard v-for="movie in movies" :key="movie.id" :poster="movie" type="movie" />
                 </div>
                 <div v-if="loading" class="text-[#E5E5E5] text-center mt-8">Loading...</div>
@@ -61,19 +61,20 @@ const fetchMovies = async () => {
     }
 };
 
-const handleSortSelection = (event) => {
-    sort.value = event.target.value;
+const handleSortSelection = (value) => {
+    sort.value = value;
     movies.value = [];
     page.value = 1;
     loading.value = true;
     fetchMovies();
 };
 
-const handleGenreSelection = () => {
-    movies.value = []; 
+const handleGenreSelection = (newSelectedGenres) => {
+    selectedGenres.value = newSelectedGenres;
+    movies.value = [];
     page.value = 1;
-    loading.value = true; 
-    fetchMovies(); 
+    loading.value = true;
+    fetchMovies();
 };
 
 const handleLoadMore = () => {

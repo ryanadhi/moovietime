@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const props = defineProps({
     type: {
@@ -76,8 +76,7 @@ const fetchGenres = async () => {
 };
 
 const handleSortSelection = (event) => {
-    sort.value = event.target.value;
-    emit('update:sort', sort.value);
+    emit('update:sort', event.target.value);
 };
 
 const handleGenreSelection = () => {
