@@ -90,7 +90,8 @@
             <!-- Movie reviews -->
             <h2 class="text-md font-semibold mb-4 uppercase">Recommendation Movies</h2>
             <div class="grid grid-cols-5 gap-4">
-                <MovieCard v-for="recommendation in recommendations" :key="recommendation.id" :movie="recommendation" />
+                <MovieCard v-for="recommendation in recommendations" :key="recommendation.id" :poster="recommendation"
+                    type="movie" />
             </div>
         </div>
     </div>
@@ -101,7 +102,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import starIcon from '/icons/star.png';
 import ReviewCard from '~/components/ReviewCard.vue';
-import MovieCard from '~/components/MovieCard.vue';
+import MovieCard from '~/components/PosterCard.vue';
 
 const movie = ref(null);
 const reviews = ref([]);

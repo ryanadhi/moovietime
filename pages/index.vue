@@ -10,14 +10,14 @@
 
         <!-- Movie List -->
         <div class="movie-list grid grid-cols-5 gap-6">
-            <MovieCard v-for="movie in topMovies" :key="movie.id" :movie="movie" />
+            <MovieCard v-for="movie in topMovies" :key="movie.id" :poster="movie" type="movie" />
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import MovieCard from '~/components/MovieCard.vue';
+import MovieCard from '~/components/PosterCard.vue';
 
 // State to hold the popular movies
 const topMovies = ref([]);

@@ -1,12 +1,9 @@
 <template>
     <div class="container mx-auto py-24">
-        <!-- Darker rectangle -->
         <div class="absolute top-16 left-0 w-full h-[320px] bg-white opacity-10"></div>
 
         <div class="z-50 relative">
-            <!-- Line above the title -->
             <div class="line bg-[#E74C3C] w-[112px] h-[6px] mb-4"></div>
-            <!-- Title -->
             <h2 class="text-[36px] font-semibold text-[#E5E5E5] mb-8">Movies</h2>
         </div>
 
@@ -17,7 +14,7 @@
             </div>
             <div class="content basis-3/4 flex  flex-col items-center">
                 <div class="content-list grid grid-cols-4 gap-6">
-                    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
+                    <MovieCard v-for="movie in movies" :key="movie.id" :poster="movie" type="movie" />
                 </div>
                 <div v-if="loading" class="text-[#E5E5E5] text-center mt-8">Loading...</div>
                 <div v-else-if="!movies.length" class="text-[#E5E5E5] text-center mt-8">No movies found</div>
@@ -32,10 +29,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import MovieCard from '~/components/MovieCard.vue';
+import MovieCard from '~/components/PosterCard.vue';
 import Sidebar from '~/components/Sidebar.vue';
 
-// State to hold the popular movies
 const movies = ref([]);
 const loading = ref(true);
 const page = ref(1);
@@ -67,17 +63,17 @@ const fetchMovies = async () => {
 
 const handleSortSelection = (event) => {
     sort.value = event.target.value;
-    movies.value = []; // Clear the current movies
-    page.value = 1; // Reset the page number
-    loading.value = true; // Set loading to true
-    fetchMovies(); // Fetch movies with the new sort option
+    movies.value = [];
+    page.value = 1;
+    loading.value = true;
+    fetchMovies();
 };
 
 const handleGenreSelection = () => {
-    movies.value = []; // Clear the current movies
-    page.value = 1; // Reset the page number
-    loading.value = true; // Set loading to true
-    fetchMovies(); // Fetch movies with the new genre selection
+    movies.value = []; 
+    page.value = 1;
+    loading.value = true; 
+    fetchMovies(); 
 };
 
 const handleLoadMore = () => {
