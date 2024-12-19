@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink :to="`/movies/${poster.id}`">
+    <NuxtLink :to="`/${type === 'movie' ? 'movies' : 'tvshows'}/${poster.id}`">
         <div class="poster-card overflow-hidden text-white w-[220px] mb-4">
             <div class="relative">
                 <!-- Movie Image with fallback to gray poster -->
