@@ -3,8 +3,15 @@
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
+1. Create a `.env` file:
 
-Make sure to install dependencies:
+- Copy the variables from `.env.example`
+```
+cp .env.example .env
+```
+- Update the `.env` file with your own API key
+
+2. Make sure to install dependencies:
 
 ```bash
 # npm
