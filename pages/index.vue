@@ -1,5 +1,20 @@
 <template>
     <div class="container mx-auto py-24">
+
+        <!-- Now Playing Carousel -->
+        <div v-if="nowPlaying.length" class="now-playing-carousel mb-8">
+            <carousel :items-to-show="1.5">
+                <slide v-for="slide in nowPlaying" :key="slide">
+                    <CarouselCard :card="slide" />
+                </slide>
+
+                <template #addons>
+                    <navigation />
+                    <pagination />
+                </template>
+            </carousel>
+        </div>
+
         <!-- Line above the title -->
         <div class="line bg-[#E74C3C] w-[112px] h-[6px] mb-4"></div>
         <!-- Title -->
@@ -18,10 +33,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MovieCard from '~/components/PosterCard.vue';
+import CarouselCard from '~/components/CarouselCard.vue';
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 // State to hold the popular movies
 const topMovies = ref([]);
 const loading = ref(true);
+const nowPlaying = ref([]);
 
 // API Key
 const runtimeConfig = useRuntimeConfig();
@@ -38,7 +57,7 @@ const fetchTopMovies = async () => {
         }
         const data = await response.json();
 
-        topMovies.value = data.results.slice(0, 10); // Get the top 10 movies
+        topMovies.value = data.results.slice(0, 10);
     } catch (error) {
         console.error('Error fetching movies:', error);
     } finally {
@@ -46,7 +65,27 @@ const fetchTopMovies = async () => {
     }
 };
 
+
+// Fetch now playing movies from TMDB API
+const fetchNowPlaying = async () => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`
+        );
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        nowPlaying.value = data.results.slice(0, 5);
+    } catch (error) {
+        console.error('Error fetching now playing movies:', error);
+    }
+};
+
+
+
 onMounted(() => {
+    fetchNowPlaying();
     fetchTopMovies();
 });
 </script>
