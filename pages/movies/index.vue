@@ -11,48 +11,20 @@
         </div>
 
         <div class="container flex relative z-50">
-            <div class="sidebar basis-1/4">
-                <div class="bg-gradient-to-b from-[#0E1723] to-[#1E232A00] w-11/12 rounded-lg relative z-50">
-                    <div class="p-4">
-                        <h3 class="text-md font-semibold mb-2">Sort Results By</h3>
-
-                        <!-- Dropdown -->
-                        <div class="relative">
-                            <select class="w-full bg-[#E0E0E021] text-[#E5E5E5] rounded mt-2 p-2 pr-10 relative z-50"
-                                @change="handleSortSelection" v-model="sort">
-                                <option value="popularity.asc">Popularity Ascending</option>
-                                <option value="popularity.desc">Popularity Descending</option>
-                                <option value="release_date.asc">Release Date Ascending</option>
-                                <option value="release_date.desc">Release Date Descending</option>
-                                <option value="vote_average.asc">Rating Ascending</option>
-                                <option value="vote_average.desc">Rating Descending</option>
-                            </select>
-                            <div class="absolute inset-y-0 top-2 right-0 flex items-center pr-2 pointer-events-none">
-                                <svg class="w-4 h-4 text-[#E5E5E5]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="text-md font-semibold mt-8 mb-2 px-4">Genres</h3>
-                    <hr class="border-[#fff] border-opacity-20 mb-4" />
-                    <!-- Genres Checkbox -->
-                    <div class="px-4">
-                        <label class="flex justify-between items-center mb-2" v-for="genre in genres" :key="genre.id">
-                            <span class="text-[#E5E5E5]">{{ genre.name }}</span>
-                            <input type="checkbox" class="custom-checkbox ml-2" :value="genre.id" v-model="selectedGenres"
-                                @change="handleGenreSelection" />
-                        </label>
-                    </div>
-                </div>
+            <div class="basis-1/4">
+                <Sidebar :sort="sort" :selectedGenres="selectedGenres" @update:sort="handleSortSelection"
+                    @update:selectedGenres="handleGenreSelection" type="movie" />
             </div>
-            <div class="content basis-3/4 justify-center">
-                <div class="content-list grid grid-cols-4 gap-2">
+            <div class="content basis-3/4 flex  flex-col items-center">
+                <div class="content-list grid grid-cols-4 gap-6">
                     <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
                 </div>
+                <div v-if="loading" class="text-[#E5E5E5] text-center mt-8">Loading...</div>
+                <div v-else-if="!movies.length" class="text-[#E5E5E5] text-center mt-8">No movies found</div>
+                <button v-else @click="handleLoadMore"
+                    class="load-more-button mt-8 bg-[#ff0000] text-white px-4 py-2 rounded-3xl text-sm font-semibold w-36">
+                    Load More
+                </button>
             </div>
         </div>
     </div>
@@ -61,10 +33,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MovieCard from '~/components/MovieCard.vue';
+import Sidebar from '~/components/Sidebar.vue';
 
 // State to hold the popular movies
 const movies = ref([]);
-const genres = ref([]);
 const loading = ref(true);
 const page = ref(1);
 const sort = ref('popularity.desc');
@@ -93,20 +65,6 @@ const fetchMovies = async () => {
     }
 };
 
-const fetchGenres = async () => {
-    try {
-        const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch genres');
-        }
-
-        const data = await response.json();
-        genres.value = data.genres;
-    } catch (error) {
-        console.error('Error fetching genres:', error);
-    }
-};
-
 const handleSortSelection = (event) => {
     sort.value = event.target.value;
     movies.value = []; // Clear the current movies
@@ -122,40 +80,12 @@ const handleGenreSelection = () => {
     fetchMovies(); // Fetch movies with the new genre selection
 };
 
+const handleLoadMore = () => {
+    page.value++;
+    fetchMovies();
+};
+
 onMounted(() => {
-    fetchGenres();
     fetchMovies();
 });
 </script>
-
-<style scoped>
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.custom-checkbox {
-    appearance: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    position: relative;
-    border-radius: 4px;
-}
-
-.custom-checkbox:checked::after {
-    content: '✔';
-    position: absolute;
-    top: 0;
-    left: 3px;
-    font-size: 10px;
-    color: white;
-}
-
-.custom-checkbox:checked {
-    background-color: #E74C3C;
-}
-</style>
