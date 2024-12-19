@@ -3,7 +3,7 @@
 
         <!-- Now Playing Carousel -->
         <div v-if="nowPlaying.length" class="now-playing-carousel mb-8">
-            <carousel :items-to-show="1.5">
+            <carousel v-bind="config">
                 <slide v-for="slide in nowPlaying" :key="slide">
                     <CarouselCard :card="slide" />
                 </slide>
@@ -82,7 +82,13 @@ const fetchNowPlaying = async () => {
     }
 };
 
-
+// Carousel config
+const config = {
+    autoplay: 5000,
+    wrapAround: true,
+    pauseAutoplayOnHover: true,
+    itemsToShow: 2,
+};
 
 onMounted(() => {
     fetchNowPlaying();
@@ -122,5 +128,61 @@ onMounted(() => {
     text-align: center;
     font-size: 1.5rem;
     color: white;
+}
+
+.carousel__slide {
+    padding: 5;
+}
+
+.carousel__viewport {
+    perspective: 2000px;
+}
+
+.carousel__track {
+    transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+    transition: 0.5s;
+}
+
+.carousel__slide {
+    opacity: 0.9;
+    transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active~.carousel__slide {
+    transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+    opacity: 0.5;
+    transform: rotateY(-10deg) scale(0.8);
+}
+
+.carousel__slide.carousel__slide--next {
+    opacity: 0.5;
+    transform: rotateY(10deg) scale(0.8);
+}
+
+.carousel__slide--active {
+    opacity: 1;
+    transform: rotateY(0) scale(1);
+}
+
+:deep(.carousel__pagination-button::after) {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+/* active  */
+:deep(.carousel__pagination-button--active::after) {
+    background-color: #E74C3C;
+    width: 48px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.2);
 }
 </style>
