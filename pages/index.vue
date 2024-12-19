@@ -38,7 +38,6 @@ const fetchTopMovies = async () => {
         }
         const data = await response.json();
 
-        console.log({ data });
         topMovies.value = data.results.slice(0, 10); // Get the top 10 movies
     } catch (error) {
         console.error('Error fetching movies:', error);
