@@ -19,7 +19,7 @@
                 </div>
             </div>
             <!-- Rating -->
-            <div class="flex items-start bg-[#C4C4C447] p-2 rounded-lg ">
+            <div class="flex items-start bg-[#C4C4C447] p-2 rounded-lg " v-if="review.author_details.rating">
                 <img :src="starIcon" alt="Star Icon" class="h-4" />
                 <span class="ml-2 text-3xl font-semibold ">{{ review.author_details.rating.toFixed(1) }}</span>
 

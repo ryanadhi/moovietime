@@ -81,18 +81,20 @@
         <div class="bg-white text-black px-28 pb-4">
             <!-- TV reviews -->
             <h2 class="text-[#FF0000] text-md font-semibold mb-4 uppercase ">Reviews</h2>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4" v-if="reviews.length">
                 <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
             </div>
+            <div v-if="!reviews.length" class="text-center text-sm mt-4">No reviews available</div>
         </div>
 
         <div class=" text-white px-28 py-12">
             <!-- TV reviews -->
             <h2 class="text-md font-semibold mb-4 uppercase">Recommendation Movies</h2>
-            <div class="grid grid-cols-5 gap-4">
+            <div class="grid grid-cols-5 gap-4" v-if="recommendations.length">
                 <TvShowCard v-for="recommendation in recommendations" :key="recommendation.id" :poster="recommendation"
                     type="tv" />
             </div>
+            <div v-if="!recommendations.length" class="text-center text-sm mt-4">No recommendations available</div>
         </div>
     </div>
 </template>
@@ -113,6 +115,7 @@ const recommendations = ref([]);
 const runtimeConfig = useRuntimeConfig();
 const apiKey = runtimeConfig.public.tmdbApiKey;
 
+
 onMounted(async () => {
     try {
         // Fetch TV show details
@@ -124,13 +127,13 @@ onMounted(async () => {
         const reviewsResponse = await fetch(`https://api.themoviedb.org/3/tv/${tvShowId}/reviews?api_key=${apiKey}`);
         if (!reviewsResponse.ok) throw new Error('Failed to fetch reviews');
         const reviewsData = await reviewsResponse.json();
-        reviews.value = reviewsData.results.slice(0, 2); // Limit to 2 reviews
+        reviews.value = reviewsData.results.slice(0, 2);
 
         // Fetch Recommendations
         const recommendationsResponse = await fetch(`https://api.themoviedb.org/3/tv/${tvShowId}/recommendations?api_key=${apiKey}`);
         if (!recommendationsResponse.ok) throw new Error('Failed to fetch recommendations');
         const recommendationsData = await recommendationsResponse.json();
-        recommendations.value = recommendationsData.results.slice(0, 5); // Limit to 5 recommendations
+        recommendations.value = recommendationsData.results.slice(0, 5); 
     } catch (error) {
         console.error(error.message);
     }
