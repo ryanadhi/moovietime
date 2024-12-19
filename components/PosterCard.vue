@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="`/${type === 'movie' ? 'movies' : 'tvshows'}/${poster.id}`">
-        <div class="poster-card overflow-hidden text-white w-[220px] mb-4">
+        <div class="poster-card overflow-hidden text-white w-[220px] mb-4 relative">
             <div class="relative">
                 <!-- Movie Image with fallback to gray poster -->
                 <img :src="poster.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_bestv2${poster.poster_path}` : ''"
@@ -13,6 +13,17 @@
                 <div
                     class="rating absolute top-0 right-0 bg-[#1E232BCC] text-[#E5E5E5] text-[18px] py-1 px-2 font-bold">
                     {{ poster.vote_average ? poster.vote_average.toFixed(1) : 'N/A' }}
+                </div>
+
+                <!-- Overlay with View Button -->
+                <div
+                    class="overlay absolute inset-0 bg-black flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 gap-4">
+                    <div class="flex items-center" v-if="poster.vote_average">
+                        <img :src="starIcon" alt="Star Icon" class="h-6" />
+                        <span class="ml-2 text-3xl font-semibold "> {{ poster.vote_average ?
+                            poster.vote_average.toFixed(1) : 'N/A' }}</span>
+                    </div>
+                    <button class="view-button bg-[#FF0000] text-white px-4 py-2 rounded-3xl">View</button>
                 </div>
             </div>
 
@@ -43,6 +54,8 @@ const props = defineProps({
     }
 });
 
+import starIcon from '/icons/star.png';
+
 const title = computed(() => {
     return props.type === 'movie' ? props.poster.title : props.poster.name;
 });
@@ -50,8 +63,6 @@ const title = computed(() => {
 const releaseDate = computed(() => {
     return props.type === 'movie' ? props.poster.release_date : props.poster.first_air_date;
 });
-
-
 </script>
 
 <style scoped>
@@ -66,5 +77,13 @@ const releaseDate = computed(() => {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+}
+
+.poster-card {
+    position: relative;
+}
+
+.poster-card:hover .overlay {
+    opacity: 1;
 }
 </style>
