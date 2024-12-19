@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div class="container mx-auto py-24">
+        <!-- Line above the title -->
+        <div class="line bg-[#E74C3C] w-[112px] h-[6px] mb-4"></div>
         <!-- Title -->
         <h2 class="text-[24px] font-semibold text-[#E5E5E5] mb-8">Discover Movies</h2>
 
@@ -69,5 +71,18 @@ onMounted(() => {
         grid-template-columns: repeat(2, 1fr);
         /* 2 columns on small screens */
     }
+}
+
+@media (max-width: 480px) {
+    .movie-list {
+        grid-template-columns: 1fr;
+        /* 1 column on extra small screens */
+    }
+}
+
+.loading-spinner {
+    text-align: center;
+    font-size: 1.5rem;
+    color: white;
 }
 </style>

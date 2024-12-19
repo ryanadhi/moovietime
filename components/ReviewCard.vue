@@ -31,7 +31,7 @@
         <div class="text-black text-sm italic overflow-auto flex-1">
             <span v-if="review.content.length > 700">
             <span v-if="!showFullReview">
-                {{ review.content.substring(0, 700) }}...
+                <span v-html="review.content.substring(0, 700) + '...'"></span>
                 <a href="#" class="text-[#FF0000] underline" @click.prevent="showFullReview = !showFullReview">
                 read the rest
                 </a>
